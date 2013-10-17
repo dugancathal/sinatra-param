@@ -30,9 +30,9 @@ describe 'Parameter Types' do
 
   describe 'Time' do
     it 'coerces time' do
-      get('/coerce/time', arg: '20130117') do |response|
+      get('/coerce/time', arg: '20130117T00:00:00.000000Z') do |response|
         response.status.should == 200
-        JSON.parse(response.body)['arg'].should eq('2013-01-17 00:00:00 -0500')
+        JSON.parse(response.body)['arg'].should eq('2013-01-17 00:00:00 UTC')
       end
     end
   end
