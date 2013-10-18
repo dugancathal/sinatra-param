@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'sinatra/param/version'
+require 'sinatra/param/transformer'
 require 'time'
 require 'date'
 
@@ -10,7 +11,7 @@ module Sinatra
     def param(name, type, options = {})
       begin
         params[name] = coerce(params[name], type, options) || options[:default]
-        params[name] = options[:transform].to_proc.call(params[name]) if options[:transform]
+        params[name] = Transformer.transform(params[name], options[:transform])
         validate!(params[name], options)
       rescue
         error = "Invalid parameter, #{name}"
